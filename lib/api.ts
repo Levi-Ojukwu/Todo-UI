@@ -1,0 +1,103 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+
+export async function register(name: string, email: string, password: string) {
+  const response = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }),
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function login(email: string, password: string) {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function getProfile(token: string) {
+  const response = await fetch(`${API_URL}/auth/profile`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function updateProfile(token: string, updates: any) {
+  const response = await fetch(`${API_URL}/auth/profile`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updates),
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function addTodo(token: string, todo: any) {
+  const response = await fetch(`${API_URL}/todos`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(todo),
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function listTodos(token: string) {
+  const response = await fetch(`${API_URL}/todos`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function updateTodo(token: string, id: string, updates: any) {
+  const response = await fetch(`${API_URL}/todos/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updates),
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function markTodoCompleted(token: string, id: string) {
+  const response = await fetch(`${API_URL}/todos/${id}/complete`, {
+    method: "PATCH",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
+
+export async function deleteTodo(token: string, id: string) {
+  const response = await fetch(`${API_URL}/todos/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(data.message)
+  return data
+}
