@@ -46,7 +46,7 @@ export async function updateProfile(token: string, updates: any) {
 }
 
 export async function addTodo(token: string, todo: any) {
-  const response = await fetch(`${API_URL}/todos`, {
+  const response = await fetch(`${API_URL}/todo`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export async function addTodo(token: string, todo: any) {
 }
 
 export async function listTodos(token: string) {
-  const response = await fetch(`${API_URL}/todos`, {
+  const response = await fetch(`${API_URL}/todo`, {
     headers: { Authorization: `Bearer ${token}` },
   })
   const data = await response.json()
@@ -69,7 +69,7 @@ export async function listTodos(token: string) {
 }
 
 export async function updateTodo(token: string, id: string, updates: any) {
-  const response = await fetch(`${API_URL}/todos/${id}`, {
+  const response = await fetch(`${API_URL}/todo/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export async function updateTodo(token: string, id: string, updates: any) {
 }
 
 export async function markTodoCompleted(token: string, id: string) {
-  const response = await fetch(`${API_URL}/todos/${id}/complete`, {
+  const response = await fetch(`${API_URL}/todo/${id}/complete`, {
     method: "PATCH",
     headers: { Authorization: `Bearer ${token}` },
   })
@@ -93,7 +93,7 @@ export async function markTodoCompleted(token: string, id: string) {
 }
 
 export async function deleteTodo(token: string, id: string) {
-  const response = await fetch(`${API_URL}/todos/${id}`, {
+  const response = await fetch(`${API_URL}/todo/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   })

@@ -13,8 +13,8 @@ export function LandingNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
-          <Link href="/" className="flex items-center gap-3 font-bold text-xl">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary via-primary/80 to-primary/60 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+          <Link href="/" className="flex items-center gap-2 font-bold text-xl">
+            <div className="w-8 h-8 bg-gradient-to-r from-gray-400 via-gray-300 to-[#d52f68] rounded-lg flex items-center justify-center text-white font-bold text-sm">
               T
             </div>
             <span className="text-text hidden sm:inline">TaskFlow</span>
@@ -32,12 +32,12 @@ export function LandingNavbar() {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" asChild className="text-[#d52f68] font-bold">
               <Link href="/login">Sign In</Link>
             </Button>
             <Button
               asChild
-              className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white hover:shadow-accent"
+              className="bg-gradient-to-r from-primary via-primary/90 to-gray-200 text-white hover:shadow-accent"
             >
               <Link href="/register">Get Started</Link>
             </Button>

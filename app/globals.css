@@ -1,279 +1,240 @@
-/* @import "tw-animate-css"; */
+/* globals.css — Tailwind v3 compatible but preserves v4 class names */
 
-/* Tailwind v3 base imports */
+/* Tailwind core directives — must be present */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Remove these — they are Tailwind v4-only */
-/* @import "tailwindcss"; */
-/* @custom-variant dark (&:is(.dark *)); */
-
-
-/* --------------------------------------------------
-   CSS VARIABLES (SAFE FOR TAILWIND v3)
--------------------------------------------------- */
+/* ------------------------
+   CSS VARIABLES (original values kept)
+   ------------------------ */
 :root {
-  --card: #ffffff;
-  --card-foreground: #131313;
-  --popover: #ffffff;
-  --popover-foreground: #131313;
-
-  --primary: #151515;
-  --primary-foreground: #fcfcfc;
-
-  --secondary: #f7f7f7;
-  --secondary-foreground: #151515;
-
-  --muted: #f7f7f7;
-  --muted-foreground: #666666;
-
-  --accent: #f7f7f7;
-  --accent-foreground: #151515;
-
-  --destructive: #d9534f;
-  --destructive-foreground: #ffffff;
-
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #cccccc;
-
-  --radius: 10px;
-
-  --sidebar: #fafafa;
-  --sidebar-foreground: #151515;
-  --sidebar-primary: #151515;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #f7f7f7;
-  --sidebar-accent-foreground: #151515;
-  --sidebar-border: #e5e5e5;
-  --sidebar-ring: #cccccc;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --primary-light: #f5527f; /* fallback for gradients */
+  --primary-dark: #c81d5f;
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Dark theme variables — preserved from your v4 file */
 .dark {
-  --background: #131313;
-  --foreground: #fafafa;
-  --card: #131313;
-  --card-foreground: #fafafa;
-
-  --popover: #131313;
-  --popover-foreground: #fafafa;
-
-  --primary: #fafafa;
-  --primary-foreground: #151515;
-
-  --secondary: #2a2a2a;
-  --secondary-foreground: #fafafa;
-
-  --muted: #2a2a2a;
-  --muted-foreground: #aaaaaa;
-
-  --accent: #2a2a2a;
-  --accent-foreground: #fafafa;
-
-  --destructive: #b3413e;
-  --destructive-foreground: #fafafa;
-
-  --border: #2a2a2a;
-  --input: #2a2a2a;
-  --ring: #555555;
-
-  --sidebar: #151515;
-  --sidebar-foreground: #fafafa;
-  --sidebar-primary: #4a90e2;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #2a2a2a;
-  --sidebar-accent-foreground: #fafafa;
-  --sidebar-border: #2a2a2a;
-  --sidebar-ring: #555555;
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
 }
 
-/* --------------------------------------------------
-   BASE LAYER
--------------------------------------------------- */
+/* ------------------------
+   EXTRA theme variables (v4 had @theme inline) — keep them as fallbacks
+   ------------------------ */
+:root {
+  --font-sans: "Inter", "Inter Fallback";
+  --color-primary: #ec2976;
+  --color-primary-light: #f5527f;
+  --color-primary-dark: #c81d5f;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ------------------------
+   BASE LAYER — avoid using @apply on v4-only names here
+   ------------------------ */
 @layer base {
-  * {
-    border-color: var(--border);
-    outline-color: var(--ring);
+  /* Apply sensible defaults using variables so app-level styles work */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    /* don't use @apply for border-border because it may not be defined yet */
+  }
+
+  html, body {
+    height: 100%;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+
+  /* Default border and outline colors used by elements that don't use classes */
+  hr, input, textarea, select, button {
+    border-color: var(--border);
+    background-color: transparent;
   }
 }
 
-/* --------------------------------------------------
-   UTILITIES & CUSTOM CLASSES
--------------------------------------------------- */
+/* ------------------------
+   UTILITY CLASSES — create v4-style names here so existing markup works
+   ------------------------ */
 @layer utilities {
+  /* Background / text utilities (v4 names) */
+  .bg-background { background-color: var(--background) !important; }
+  .text-foreground { color: var(--foreground) !important; }
+
+  .bg-card { background-color: var(--card) !important; }
+  .text-card-foreground { color: var(--card-foreground) !important; }
+
+  .bg-popover { background-color: var(--popover) !important; }
+  .text-popover-foreground { color: var(--popover-foreground) !important; }
+
+  .bg-primary { background-color: var(--primary) !important; }
+  .text-primary-foreground { color: var(--primary-foreground) !important; }
+
+  .bg-secondary { background-color: var(--secondary) !important; }
+  .text-secondary-foreground { color: var(--secondary-foreground) !important; }
+
+  .bg-muted { background-color: var(--muted) !important; }
+  .text-muted-foreground { color: var(--muted-foreground) !important; }
+
+  .bg-accent { background-color: var(--accent) !important; }
+  .text-accent-foreground { color: var(--accent-foreground) !important; }
+
+  .bg-destructive { background-color: var(--destructive) !important; }
+  .text-destructive-foreground { color: var(--destructive-foreground) !important; }
+
+  /* Border and input utilities */
+  .border-border { border: 1px solid var(--border) !important; }
+  .border-0-border { border: 0 !important; } /* optional helper */
+  .input-bg { background-color: var(--input) !important; }
+
+  /* Ring utilities (approximation) */
+  .ring-ring { box-shadow: 0 0 0 3px rgba(0,0,0,0.04), 0 0 0 6px var(--ring); }
+  .outline-ring { outline-color: var(--ring) !important; }
+
+  /* Sidebar tokens */
+  .bg-sidebar { background-color: var(--sidebar) !important; }
+  .text-sidebar-foreground { color: var(--sidebar-foreground) !important; }
+  .bg-sidebar-primary { background-color: var(--sidebar-primary) !important; }
+  .text-sidebar-primary-foreground { color: var(--sidebar-primary-foreground) !important; }
+  .border-sidebar { border: 1px solid var(--sidebar-border) !important; }
+
+  /* Gradient utilities (v4 names preserved) */
   .gradient-primary {
-    background: linear-gradient(to right, var(--primary), #f5527f, #c81d5f);
+    background-image: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary-dark));
   }
-
   .gradient-primary-subtle {
-    background: linear-gradient(to bottom right, var(--primary) 5%, #f5527f11);
+    background-image: linear-gradient(135deg, color-mix(in srgb, var(--primary) 5%, transparent), color-mix(in srgb, var(--primary-light) 5%, transparent));
   }
 
-  /* Animations */
-  @keyframes spin-fast {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  /* Shadows named like v4 */
+  .shadow-soft { box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important; }
+  .shadow-medium { box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important; }
+  .shadow-accent { box-shadow: 0 8px 24px rgba(236,41,118,0.15) !important; }
 
-  .animate-spin {
-    animation: spin-fast 1s linear infinite;
-  }
+  /* Hover and glass helpers */
+  .hover-lift { transition: transform .3s, box-shadow .3s; }
+  .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(236,41,118,0.15); }
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.5s ease-out;
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 0 0 rgba(236, 41, 118, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 0 8px rgba(236, 41, 118, 0);
-    }
-  }
-
-  .animate-pulse-glow {
-    animation: pulse-glow 2s infinite;
-  }
-
-  /* Shadows */
-  .shadow-soft {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .shadow-medium {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  }
-
-  .shadow-accent {
-    box-shadow: 0 8px 24px rgba(236, 41, 118, 0.15);
-  }
-
-  /* Hover */
-  .hover-lift {
-    transition: all 0.3s;
-    transform: translateY(0);
-  }
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(236, 41, 118, 0.15);
-  }
-
-  /* Glass Effect */
   .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* Focus Styles */
+  /* Focus helper */
   .focus-ring {
     outline: none;
-    box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px var(--background);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.035), 0 0 0 6px var(--ring);
   }
+
+  /* Animation utilities (kept from your v4 file) */
+  @keyframes spin-fast { to { transform: rotate(360deg); } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideInRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(236, 41, 118, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(236, 41, 118, 0); }
+  }
+
+  .animate-spin { animation: spin-fast 1s linear infinite; }
+  .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+  .animate-slide-in-right { animation: slideInRight 0.5s ease-out; }
+  .animate-pulse-glow { animation: pulse-glow 2s infinite; }
+
+  /* small helpers to mimic v4 token classes people often use */
+  .bg-background-foreground { background-color: var(--color-background); color: var(--color-foreground); }
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
 
-/* Date input styling */
+/* Input calendar indicator fix */
 input::-webkit-calendar-picker-indicator {
   filter: invert(0.8) brightness(1.2);
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

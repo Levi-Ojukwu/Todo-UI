@@ -8,7 +8,7 @@ export function LandingFooter() {
             {/* Brand */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-primary via-primary/80 to-primary/60 rounded-lg flex items-center justify-center text-white font-bold">
+                <div className="w-8 h-8 bg-gradient-to-r from-gray-400 via-gray-300 to-[#d52f68] rounded-lg flex items-center justify-center text-white font-bold">
                   T
                 </div>
                 <span className="font-bold text-text">TaskFlow</span>
@@ -48,8 +48,8 @@ export function LandingFooter() {
           </div>
   
           {/* Divider */}
-          <div className="border-t border-border pt-8">
-            <p className="text-center text-text-muted text-sm">&copy; {currentYear} TaskFlow. All rights reserved.</p>
+          <div className="bg-gradient-to-t from-[#a03e60ac] via-gray-200 to-gray-100 border-t border-border pt-8">
+            <p className="text-center text-text-muted text-sm font-normal">&copy; {currentYear} TaskFlow. All rights reserved.</p>
           </div>
         </div>
       </footer>

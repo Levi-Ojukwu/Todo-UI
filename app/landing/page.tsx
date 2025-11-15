@@ -31,7 +31,7 @@ export default function LandingPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+    <main className="min-h-screen bg-gray-100 from-background via-background to-primary/5">
       <LandingNavbar />
 
       {/* Hero Section */}
@@ -40,7 +40,7 @@ export default function LandingPage() {
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6 text-balance">
               Organize Your Tasks,{" "}
-              <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-primary via-primary/50 to-gray-100 bg-clip-text text-transparent">
                 Master Your Goals
               </span>
             </h1>
@@ -56,7 +56,7 @@ export default function LandingPage() {
               >
                 <Link href="/register">Get Started Free</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="text-[#d52f68] font-bold border-[0.5px] border-[#d52f68] hover:border-gray-200">
                 <Link href="/login">Sign In</Link>
               </Button>
             </div>
@@ -64,13 +64,13 @@ export default function LandingPage() {
 
           {/* Hero Visual */}
           <div className="hidden md:flex justify-center">
-            <div className="w-80 h-80 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-2xl blur-2xl animate-pulse"></div>
+            <div className="w-80 h-80 bg-gradient-to-br from-[#d52f68] via-primary/10 to-[#400419] rounded-2xl blur-2xl animate-pulse"></div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section id="features" className="max-w-7xl border-t bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">Powerful Features</h2>
           <p className="text-lg text-text-muted max-w-2xl mx-auto">
@@ -82,9 +82,9 @@ export default function LandingPage() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-surface rounded-lg p-6 border border-border hover-lift shadow-soft transition-all duration-300"
+              className="bg-surface rounded-md p-6 border border-border hover-lift shadow-soft transition-all duration-300"
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center text-[#d52f68] mb-4">
                 {feature.icon}
               </div>
               <h3 className="text-lg font-semibold text-text mb-2">{feature.title}</h3>
@@ -95,7 +95,7 @@ export default function LandingPage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section id="about" className="max-w-7xl bg-[#d9236310] mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="bg-surface border border-border rounded-2xl p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-bold text-text mb-6">About TaskFlow</h2>
           <p className="text-lg text-text-muted leading-relaxed mb-4">
@@ -111,7 +111,7 @@ export default function LandingPage() {
 
       {/* CTA Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 rounded-2xl p-8 md:p-16 text-center shadow-accent">
+        <div className="bg-gradient-to-r from-primary via-primary/90 to-gray-200 rounded-2xl p-8 md:p-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
           <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
             Join thousands of users who are already organizing their tasks and achieving their goals with TaskFlow.
