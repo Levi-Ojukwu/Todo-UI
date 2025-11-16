@@ -31,19 +31,31 @@ export async function getProfile(token: string) {
   return data
 }
 
-export async function updateProfile(token: string, updates: any) {
-  const response = await fetch(`${API_URL}/auth/profile`, {
+export async function updateProfile(token: string, data: any) {
+  const formData = new FormData();
+
+  // Append normal fields
+  if (data.name) formData.append("name", data.name);
+  if (data.password) formData.append("password", data.password);
+
+  // Append file
+  if (data.image) {
+    formData.append("image", data.image);
+  }
+
+  const res = await fetch(`${API_URL}/auth/profile`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(updates),
-  })
-  const data = await response.json()
-  if (!response.ok) throw new Error(data.message)
-  return data
+    body: formData, // VERY IMPORTANT
+  });
+
+  if (!res.ok) throw new Error("Failed to update profile");
+
+  return res.json();
 }
+
 
 export async function addTodo(token: string, todo: any) {
   const response = await fetch(`${API_URL}/todo`, {

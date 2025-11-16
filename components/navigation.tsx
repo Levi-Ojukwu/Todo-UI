@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, LogOut, Settings, Home } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { ConfirmModal } from "./confirm-modal";
 
 export function Navigation() {
 	const router = useRouter();
 	const { user, logout } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
+	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
 	const handleLogout = () => {
 		logout();
@@ -50,7 +52,7 @@ export function Navigation() {
 							Profile
 						</Link>
 						<Button
-							onClick={handleLogout}
+							onClick={() => setShowLogoutConfirm(true)}
 							variant='ghost'
 							className='flex items-center gap-2 text-error hover:text-error/80'>
 							<LogOut className='w-4 h-4' />
@@ -82,13 +84,26 @@ export function Navigation() {
 							Profile
 						</Link>
 						<button
-							onClick={handleLogout}
+							onClick={() => setShowLogoutConfirm(true)}
 							className='w-full text-left px-4 py-2 text-error hover:bg-error/5 rounded-lg'>
 							Logout
 						</button>
 					</div>
 				)}
 			</div>
+
+			<ConfirmModal
+				isOpen={showLogoutConfirm}
+				title='Logout?'
+				message='Are you sure you want to logout? You will need to log in again.'
+				confirmText='Logout'
+				cancelText='Stay'
+				onCancel={() => setShowLogoutConfirm(false)}
+				onConfirm={() => {
+					logout(); // your auth-context logout function
+					setShowLogoutConfirm(false);
+				}}
+			/>
 		</nav>
 	);
 }
