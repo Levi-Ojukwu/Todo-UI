@@ -62,11 +62,28 @@ export async function addTodo(token: string, todo: any) {
 export async function listTodos(token: string) {
   const response = await fetch(`${API_URL}/todo`, {
     headers: { Authorization: `Bearer ${token}` },
-  })
-  const data = await response.json()
-  if (!response.ok) throw new Error(data.message)
-  return data
+  });
+
+  const text = await response.text(); // read raw text once
+
+  // Debug safely
+  console.log("RAW TODOS RESPONSE:", response.status, text);
+
+  // Attempt to parse JSON
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    throw new Error("Invalid JSON returned from server");
+  }
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch todos");
+  }
+
+  return { todos: data };
 }
+
 
 export async function updateTodo(token: string, id: string, updates: any) {
   const response = await fetch(`${API_URL}/todo/${id}`, {

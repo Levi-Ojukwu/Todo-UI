@@ -48,11 +48,21 @@ export default function DashboardPage() {
     setIsLoading(true)
     try {
       const data = await listTodos(token)
-      setTodos(data.todos || [])
+
+      const normalized = data.todos.map((t: any) => ({
+        id: t._id,
+        title: t.title,
+        description: t.description,
+        deadline: t.deadline,
+        tags: t.tags || [],
+        completed: t.completedAt !== null, // convert null -> false, date -> true
+      }))
+
+      setTodos(normalized)
       setError("")
     } catch (err: any) {
       setError("Failed to load todos")
-      console.log("[v0] Error loading todos:", err.message)
+      console.log("Error loading todos:", err.message)
     } finally {
       setIsLoading(false)
     }
@@ -68,13 +78,24 @@ export default function DashboardPage() {
         setEditingId(null)
       } else {
         const result = await addTodoApi(token, data)
-        setTodos([...todos, result.todo])
+        
+        setTodos([
+            ...todos,
+            {
+              id: result.todo._id,
+              title: result.todo.title,
+              description: result.todo.description,
+              deadline: result.todo.deadline,
+              tags: result.todo.tags || [],
+              completed: result.todo.completedAt !== null,
+            }
+          ])
       }
       setShowForm(false)
       setError("")
     } catch (err: any) {
       setError(err.message || "Failed to save todo")
-      console.log("[v0] Error saving todo:", err.message)
+      console.log("Error saving todo:", err.message)
     } finally {
       setIsSaving(false)
     }
@@ -87,7 +108,7 @@ export default function DashboardPage() {
       setTodos(todos.filter(t => t.id !== id))
     } catch (err: any) {
       setError("Failed to delete todo")
-      console.log("[v0] Error deleting todo:", err.message)
+      console.log("Error deleting todo:", err.message)
     }
   }
 
@@ -95,10 +116,15 @@ export default function DashboardPage() {
     if (!token) return
     try {
       await markTodoCompletedApi(token, id)
-      setTodos(todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t))
+      
+      setTodos(todos.map(t => 
+        t.id === id 
+          ? { ...t, completed: true }
+          : t
+      ))
     } catch (err: any) {
       setError("Failed to update todo")
-      console.log("[v0] Error toggling todo:", err.message)
+      console.log("Error toggling todo:", err.message)
     }
   }
 
@@ -138,7 +164,7 @@ export default function DashboardPage() {
             </div>
             <Button
               onClick={() => router.push("/profile")}
-              className="flex items-center gap-2 bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white hover:shadow-accent"
+              className="flex items-center gap-2 gradient-primary text-white hover:shadow-accent"
             >
               <Settings className="w-4 h-4" />
               <span className="hidden sm:inline">Profile Settings</span>
@@ -209,7 +235,7 @@ export default function DashboardPage() {
                     onClick={() => setFilter(f)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all ${
                       filter === f
-                        ? "bg-gradient-primary text-white shadow-accent"
+                        ? "bg-gradient-primary text-[#db366d] shadow-accent"
                         : "bg-surface border border-border-light text-text-muted hover:text-text"
                     }`}
                   >

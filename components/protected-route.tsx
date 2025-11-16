@@ -1,35 +1,30 @@
 "use client"
 
-import type React from "react"
-
-import { useAuth } from "@/lib/auth-context"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import { useAuth } from "@/lib/auth-context"
+import type { FC, ReactNode } from "react"
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
   const { user, isLoading } = useAuth()
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push("/login")
+      router.replace("/login")
     }
-  }, [user, isLoading, router])
+  }, [user, isLoading, router, pathname])
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="w-12 h-12 bg-gradient-primary rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-text-muted">Loading...</p>
-        </div>
+        <p className="text-center text-text-muted">Loading...</p>
       </div>
     )
   }
 
-  if (!user) {
-    return null
-  }
+  if (!user) return null
 
   return children
 }

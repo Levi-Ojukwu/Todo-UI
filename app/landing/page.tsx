@@ -1,128 +1,164 @@
-"use client"
+/** @format */
 
-import { LandingNavbar } from "@/components/landing-navbar"
-import { LandingFooter } from "@/components/landing-footer"
-import { CheckCircle, Clock, Users, Zap } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+"use client";
+
+import { LandingNavbar } from "@/components/landing-navbar";
+import { LandingFooter } from "@/components/landing-footer";
+import { CheckCircle, Clock, Users, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { PublicRoute } from "@/components/public-route";
 
 export default function LandingPage() {
-  const features = [
-    {
-      icon: <CheckCircle className="w-6 h-6" />,
-      title: "Task Management",
-      description: "Create, organize, and manage your tasks with ease. Track progress and stay on top of your goals.",
-    },
-    {
-      icon: <Clock className="w-6 h-6" />,
-      title: "Smart Scheduling",
-      description: "Set deadlines and priorities for your tasks. Get reminders to never miss an important deadline.",
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "Collaboration",
-      description: "Work efficiently with our intuitive interface. Track your productivity with detailed insights.",
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Lightning Fast",
-      description: "Experience blazing-fast performance. Our platform is optimized for speed and reliability.",
-    },
-  ]
+	const features = [
+		{
+			icon: <CheckCircle className='w-6 h-6' />,
+			title: "Task Management",
+			description:
+				"Create, organize, and manage your tasks with ease. Track progress and stay on top of your goals.",
+		},
+		{
+			icon: <Clock className='w-6 h-6' />,
+			title: "Smart Scheduling",
+			description:
+				"Set deadlines and priorities for your tasks. Get reminders to never miss an important deadline.",
+		},
+		{
+			icon: <Users className='w-6 h-6' />,
+			title: "Collaboration",
+			description:
+				"Work efficiently with our intuitive interface. Track your productivity with detailed insights.",
+		},
+		{
+			icon: <Zap className='w-6 h-6' />,
+			title: "Lightning Fast",
+			description:
+				"Experience blazing-fast performance. Our platform is optimized for speed and reliability.",
+		},
+	];
 
-  return (
-    <main className="min-h-screen bg-gray-100 from-background via-background to-primary/5">
-      <LandingNavbar />
+	return (
+		<PublicRoute>
+			<main className='min-h-screen bg-gray-100 from-background via-background to-primary/5'>
+				<LandingNavbar />
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center animate-fade-in-up">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-text mb-6 text-balance">
-              Organize Your Tasks,{" "}
-              <span className="bg-gradient-to-br from-primary via-primary/50 to-gray-100 bg-clip-text text-transparent">
-                Master Your Goals
-              </span>
-            </h1>
-            <p className="text-lg text-text-muted mb-8 text-balance">
-              TaskFlow is a modern, intuitive task management platform designed to help you stay organized, focused, and
-              productive. Manage your daily tasks effortlessly and achieve more with less effort.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white hover:shadow-accent"
-              >
-                <Link href="/register">Get Started Free</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="text-[#d52f68] font-bold border-[0.5px] border-[#d52f68] hover:border-gray-200">
-                <Link href="/login">Sign In</Link>
-              </Button>
-            </div>
-          </div>
+				{/* Hero Section */}
+				<section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32'>
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center animate-fade-in-up'>
+						<div>
+							<h1 className='text-4xl md:text-5xl font-bold text-text mb-6 text-balance'>
+								Organize Your Tasks,{" "}
+								<span className='bg-gradient-to-br from-primary via-primary/50 to-gray-100 bg-clip-text text-transparent'>
+									Master Your Goals
+								</span>
+							</h1>
+							<p className='text-lg text-text-muted mb-8 text-balance'>
+								TaskFlow is a modern, intuitive task management platform
+								designed to help you stay organized, focused, and productive.
+								Manage your daily tasks effortlessly and achieve more with less
+								effort.
+							</p>
+							<div className='flex flex-col sm:flex-row gap-4'>
+								<Button
+									asChild
+									size='lg'
+									className='bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white hover:shadow-accent'>
+									<Link href='/register'>Get Started Free</Link>
+								</Button>
+								<Button
+									asChild
+									variant='outline'
+									size='lg'
+									className='text-[#d52f68] font-bold border-[0.5px] border-[#d52f68] hover:border-gray-200'>
+									<Link href='/login'>Sign In</Link>
+								</Button>
+							</div>
+						</div>
 
-          {/* Hero Visual */}
-          <div className="hidden md:flex justify-center">
-            <div className="w-80 h-80 bg-gradient-to-br from-[#d52f68] via-primary/10 to-[#400419] rounded-2xl blur-2xl animate-pulse"></div>
-          </div>
-        </div>
-      </section>
+						{/* Hero Visual */}
+						<div className='hidden md:flex justify-center'>
+							<div className='w-80 h-80 bg-gradient-to-br from-[#d52f68] via-primary/10 to-[#400419] rounded-2xl blur-2xl animate-pulse'></div>
+						</div>
+					</div>
+				</section>
 
-      {/* Features Section */}
-      <section id="features" className="max-w-7xl border-t bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">Powerful Features</h2>
-          <p className="text-lg text-text-muted max-w-2xl mx-auto">
-            Everything you need to manage tasks efficiently and stay productive
-          </p>
-        </div>
+				{/* Features Section */}
+				<section
+					id='features'
+					className='max-w-7xl border-t bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-20'>
+					<div className='text-center mb-16'>
+						<h2 className='text-3xl md:text-4xl font-bold text-text mb-4'>
+							Powerful Features
+						</h2>
+						<p className='text-lg text-text-muted max-w-2xl mx-auto'>
+							Everything you need to manage tasks efficiently and stay
+							productive
+						</p>
+					</div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-surface rounded-md p-6 border border-border hover-lift shadow-soft transition-all duration-300"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center text-[#d52f68] mb-4">
-                {feature.icon}
-              </div>
-              <h3 className="text-lg font-semibold text-text mb-2">{feature.title}</h3>
-              <p className="text-text-muted text-sm leading-relaxed">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+						{features.map((feature, index) => (
+							<div
+								key={index}
+								className='bg-surface rounded-md p-6 border border-border hover-lift shadow-soft transition-all duration-300'>
+								<div className='w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center text-[#d52f68] mb-4'>
+									{feature.icon}
+								</div>
+								<h3 className='text-lg font-semibold text-text mb-2'>
+									{feature.title}
+								</h3>
+								<p className='text-text-muted text-sm leading-relaxed'>
+									{feature.description}
+								</p>
+							</div>
+						))}
+					</div>
+				</section>
 
-      {/* About Section */}
-      <section id="about" className="max-w-7xl bg-[#d9236310] mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="bg-surface border border-border rounded-2xl p-8 md:p-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-text mb-6">About TaskFlow</h2>
-          <p className="text-lg text-text-muted leading-relaxed mb-4">
-            TaskFlow was built with a simple mission: to make task management intuitive and accessible to everyone. We
-            believe that staying organized shouldn't require complex tools or steep learning curves.
-          </p>
-          <p className="text-lg text-text-muted leading-relaxed">
-            Our platform combines powerful features with a clean, user-friendly interface. Whether you're managing
-            personal projects, work tasks, or team collaboration, TaskFlow provides the tools you need to succeed.
-          </p>
-        </div>
-      </section>
+				{/* About Section */}
+				<section
+					id='about'
+					className='max-w-7xl bg-[#d9236310] mx-auto px-4 sm:px-6 lg:px-8 py-20'>
+					<div className='bg-surface border border-border rounded-2xl p-8 md:p-12'>
+						<h2 className='text-3xl md:text-4xl font-bold text-text mb-6'>
+							About TaskFlow
+						</h2>
+						<p className='text-lg text-text-muted leading-relaxed mb-4'>
+							TaskFlow was built with a simple mission: to make task management
+							intuitive and accessible to everyone. We believe that staying
+							organized shouldn't require complex tools or steep learning
+							curves.
+						</p>
+						<p className='text-lg text-text-muted leading-relaxed'>
+							Our platform combines powerful features with a clean,
+							user-friendly interface. Whether you're managing personal
+							projects, work tasks, or team collaboration, TaskFlow provides the
+							tools you need to succeed.
+						</p>
+					</div>
+				</section>
 
-      {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="bg-gradient-to-r from-primary via-primary/90 to-gray-200 rounded-2xl p-8 md:p-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
-          <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of users who are already organizing their tasks and achieving their goals with TaskFlow.
-          </p>
-          <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
-            <Link href="/register">Create Your Account</Link>
-          </Button>
-        </div>
-      </section>
+				{/* CTA Section */}
+				<section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20'>
+					<div className='bg-gradient-to-r from-primary via-primary/90 to-gray-200 rounded-2xl p-8 md:p-16 text-center'>
+						<h2 className='text-3xl md:text-4xl font-bold text-white mb-4'>
+							Ready to Get Started?
+						</h2>
+						<p className='text-lg text-white/90 mb-8 max-w-2xl mx-auto'>
+							Join thousands of users who are already organizing their tasks and
+							achieving their goals with TaskFlow.
+						</p>
+						<Button
+							asChild
+							size='lg'
+							className='bg-white text-primary hover:bg-white/90'>
+							<Link href='/register'>Create Your Account</Link>
+						</Button>
+					</div>
+				</section>
 
-      <LandingFooter />
-    </main>
-  )
+				<LandingFooter />
+			</main>
+		</PublicRoute>
+	);
 }
