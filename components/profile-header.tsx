@@ -3,8 +3,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-// import Image from "next/image";
-import { User, Loader2, Camera } from "lucide-react";
+import { User, Loader2, Camera, ImagePlus } from "lucide-react";
 import { updateProfile } from "@/lib/api"; // your existing update function
 import { useAuth } from "@/lib/auth-context"; // to refresh user after update
 import { Button } from "./ui/button";
@@ -88,10 +87,10 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 
 	return (
 		<>
-      <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-2xl border border-border-light">
+      <div className="flex items-end gap-3 p-6 bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-2xl border border-border-light">
         {/* Profile Image Wrapper - Clickable */}
         <div
-          className="relative w-24 h-24 rounded-full bg-gradient-primary overflow-hidden flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity group"
+          className="relative w-24 h-24 rounded-full bg-gradient-to-br gradient-primary overflow-hidden flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity group"
           onClick={() => !loading && fileInputRef.current?.click()}
         >
           {user.imageUrl ? (
@@ -103,7 +102,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <User className="w-10 h-10 text-white" />
+            <ImagePlus className="w-9 h-9 text-gray-100"/>
           )}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <Camera className="w-6 h-6 text-white" />
