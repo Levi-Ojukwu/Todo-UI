@@ -39,28 +39,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  // Refresh user profile from backend
-  const refreshUser = async () => {
-    try {
-      if (!token) return
-      const { getProfile } = await import("@/lib/api")
-      const updatedProfile = await getProfile(token)
-      
-      // Normalize the profile image URL
-      const apiBase = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api").replace(/\/api\/?$/, "")
-      const normalizedUser = {
-        id: updatedProfile.id,
-        name: updatedProfile.name,
-        email: updatedProfile.email,
-        imageUrl: updatedProfile.imageUrl || (updatedProfile.profile_image ? `${apiBase}${updatedProfile.profile_image}` : undefined),
-      }
-      
-      setUser(normalizedUser)
-      localStorage.setItem("auth_user", JSON.stringify(normalizedUser))
-    } catch (err) {
-      console.error("[v0] Failed to refresh user profile:", err)
-    }
-  }
 
   // Login handler
   const login = (newUser: User, newToken: string) => {
@@ -76,6 +54,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null)
     localStorage.removeItem("auth_token")
     localStorage.removeItem("auth_user")
+  }
+
+  // Refresh user profile from backend
+  const refreshUser = async () => {
+    try {
+      if (!token) {
+        console.log("[v0] No token available for refresh")
+        return
+      }
+
+      console.log("[v0] Refreshing user profile...")
+
+      const { getProfile } = await import("@/lib/api")
+      const updatedProfile = await getProfile(token)
+      
+      // Normalize the profile image URL
+      const apiBase = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api").replace(/\/api\/?$/, "")
+
+      console.log("[v0] Profile refresh response:", {
+        id: updatedProfile.id,
+        profile_image: updatedProfile.profile_image,
+        imageUrl: updatedProfile.imageUrl,
+        apiBase,
+      })
+
+      const normalizedUser: User = {
+        id: updatedProfile.id,
+        name: updatedProfile.name,
+        email: updatedProfile.email,
+        imageUrl: updatedProfile.imageUrl || 
+                 (updatedProfile.profile_image ? `${apiBase}${updatedProfile.profile_image}` : undefined),
+      }
+
+      console.log("[v0] Setting user state with imageUrl:", normalizedUser.imageUrl)
+      
+      setUser(normalizedUser)
+      localStorage.setItem("auth_user", JSON.stringify(normalizedUser))
+    } catch (err) {
+      console.error("[v0] Failed to refresh user profile:", err)
+      throw err
+    }
   }
 
   return (

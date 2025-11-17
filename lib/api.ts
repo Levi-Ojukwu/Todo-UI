@@ -32,23 +32,55 @@ export async function getProfile(token: string) {
 }
 
 export async function updateProfile(token: string, updates: any) {
-  const formData = new FormData()
+  const isFileUpload = updates.image instanceof File
 
-  if (updates.name) formData.append("name", updates.name)
-  if (updates.password) formData.append("password", updates.password)
-  if (updates.image) formData.append("image", updates.image)
+  console.log("[v0] updateProfile called with:", {
+    hasImage: !!updates.image,
+    imageType: updates.image?.constructor.name,
+    isFile: isFileUpload,
+    updateKeys: Object.keys(updates),
+  })  
 
-  const response = await fetch(`${API_URL}/auth/profile`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  })
+  let body
+  let headers: HeadersInit = {
+    Authorization: `Bearer ${token}`,
+  }
 
-  const data = await response.json()
-  if (!response.ok) throw new Error(data.message)
-  return data
+  if (isFileUpload) {
+    const formData = new FormData()
+    formData.append("image", updates.image)
+    if (updates.name) formData.append("name", updates.name)
+    if (updates.password) formData.append("password", updates.password)
+
+    console.log("[v0] Sending FormData with file:", updates.image.name)
+    body = formData
+  } else {
+    body = JSON.stringify(updates)
+    headers["Content-Type"] = "application/json"
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/auth/profile`, {
+      method: "PATCH",
+      headers,
+      body,
+    })
+    
+    const data = await response.json()
+    
+    console.log("[v0] updateProfile response:", {
+      status: response.status,
+      profileImage: data.user?.profile_image,
+      imageUrl: data.user?.imageUrl,
+      fullResponse: data,
+    })
+    
+    if (!response.ok) throw new Error(data.message)
+    return data
+  } catch (error) {
+    console.error("[v0] updateProfile error:", error)
+    throw error
+  }
 }
 
 

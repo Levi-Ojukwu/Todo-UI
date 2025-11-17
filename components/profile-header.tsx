@@ -3,7 +3,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { User, Loader2, Camera } from "lucide-react";
 import { updateProfile } from "@/lib/api"; // your existing update function
 import { useAuth } from "@/lib/auth-context"; // to refresh user after update
@@ -31,6 +31,12 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 		const file = e.target.files?.[0];
 		if (!file) return;
 
+		console.log("[v0] Image selected:", {
+			name: file.name,
+			size: file.size,
+			type: file.type,
+		});
+
 		// Create preview URL
 		const preview = URL.createObjectURL(file);
 		setPreviewUrl(preview);
@@ -40,21 +46,33 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 	};
 
 	const handleConfirmUpload = async () => {
-		if (!selectedFile || !token) return;
+		if (!selectedFile || !token) {
+			console.log("[v0] Upload validation failed:", {
+				hasFile: !!selectedFile,
+				hasToken: !!token,
+			});
+			return;
+		}
 
 		setLoading(true);
-
 		try {
+			console.log("[v0] Starting file upload...");
 			const updates = { image: selectedFile };
-			await updateProfile(token, updates);
+			const response = await updateProfile(token, updates);
 
-			// Refresh user profile to get updated image URL from the backend
+			console.log("[v0] Upload successful, response:", response);
+			console.log("[v0] Refreshing user data...");
+
+			await new Promise((resolve) => setTimeout(resolve, 500));
+
 			await refreshUser();
 
 			setSelectedFile(null);
 			setPreviewUrl(null);
 			setShowModal(false);
+			console.log("[v0] Upload flow completed");
 		} catch (err: any) {
+			console.error("[v0] Upload error:", err);
 			setError(err.message || "Failed to upload image");
 		} finally {
 			setLoading(false);
@@ -69,90 +87,92 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 	};
 
 	return (
-		<div className='flex flex-col gap-3 p-6 bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-2xl border border-border-light'>
-			<div className='flex items-center gap-4'>
-				{/* Profile Image Wrapper */}
-				<div
-					className='relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br gradient-primary flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity group'
-					onClick={() => !loading && fileInputRef.current?.click()}>
-					{loading ? (
-						<Loader2 className='w-8 h-8 animate-spin text-white' />
-					) : user.imageUrl ? (
-						<img
-							src={user.imageUrl || "/placeholder.svg"}
-							alt={user.name}
-							width={80}
-							height={80}
-							className='w-full h-full object-cover'
-						/>
-					) : (
-						<User className='w-10 h-10 text-white' />
-					)}
+		<>
+      <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-2xl border border-border-light">
+        {/* Profile Image Wrapper - Clickable */}
+        <div
+          className="relative w-24 h-24 rounded-full bg-gradient-primary overflow-hidden flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity group"
+          onClick={() => !loading && fileInputRef.current?.click()}
+        >
+          {user.imageUrl ? (
+            <img
+              src={user.imageUrl || "/placeholder.svg"}
+              alt={user.name}
+              width={96}
+              height={96}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <User className="w-10 h-10 text-white" />
+          )}
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <Camera className="w-6 h-6 text-white" />
+          </div>
 
-					{/* Hidden File Input */}
-					<input
-						type='file'
-						ref={fileInputRef}
-						accept='image/*'
-						className='hidden'
-						onChange={handleImageChange}
-					/>
-				</div>
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+        </div>
 
-				{/* User Info */}
-				<div className='flex-1'>
-					<h2 className='text-2xl font-bold text-text'>{user.name}</h2>
-					<p className='text-text-muted'>{user.email}</p>
-				</div>
-			</div>
+        {/* User Info */}
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold text-text">{user.name}</h2>
+          <p className="text-text-muted">{user.email}</p>
+        </div>
+      </div>
 
-			{showModal && previewUrl && (
-				<div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4'>
-					<div className='bg-surface rounded-2xl p-6 max-w-sm w-full border border-border-light shadow-lg'>
-						<h3 className='text-xl font-bold text-text mb-4'>
-							Confirm Image Upload
-						</h3>
+      {showModal && previewUrl && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-surface rounded-2xl p-6 max-w-sm w-full border border-border-light shadow-lg">
+            <h3 className="text-xl font-bold text-text mb-4">Confirm Image Upload</h3>
 
-						{/* Preview Image */}
-						<div className='mb-6 rounded-lg overflow-hidden border border-border-light'>
-							<img
-								src={previewUrl || "/placeholder.svg"}
-								alt='Preview'
-								className='w-full h-64 object-cover'
-							/>
-						</div>
+            {/* Preview Image */}
+            <div className="mb-6 rounded-lg overflow-hidden border border-border-light">
+              <img
+                src={previewUrl || "/placeholder.svg"}
+                alt="Preview"
+                className="w-full h-64 object-cover"
+              />
+            </div>
 
-						{error && (
-							<div className='p-3 bg-error/10 text-error text-sm rounded-lg mb-4'>
-								{error}
-							</div>
-						)}
+            {error && (
+              <div className="p-3 bg-error/10 text-error text-sm rounded-lg mb-4">
+                {error}
+              </div>
+            )}
 
-						{/* Action Buttons */}
-						<div className='flex gap-3'>
-							<Button
-								onClick={handleCancel}
-								disabled={loading}
-								className='flex-1 bg-surface-secondary border border-border-light text-text hover:bg-surface-secondary/80'>
-								Cancel
-							</Button>
-							<Button
-								onClick={handleConfirmUpload}
-								disabled={loading}
-								className='flex-1 gradient-primary text-white flex items-center justify-center gap-2'>
-								{loading ? (
-									<>
-										<Loader2 className='w-4 h-4 animate-spin' />
-										Uploading...
-									</>
-								) : (
-									"Upload"
-								)}
-							</Button>
-						</div>
-					</div>
-				</div>
-			)}
-		</div>
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <Button
+                onClick={handleCancel}
+                disabled={loading}
+                className="flex-1 bg-surface-secondary border border-border-light text-text hover:bg-surface-secondary/80"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirmUpload}
+                disabled={loading}
+                className="flex-1 gradient-primary text-white flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  "Upload"
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
 	);
 }
