@@ -1,37 +1,158 @@
-"use client"
+/** @format */
 
-import { User } from "lucide-react"
-import Image from "next/image"
+"use client";
+
+import { useState, useRef } from "react";
+import Image from "next/image";
+import { User, Loader2, Camera } from "lucide-react";
+import { updateProfile } from "@/lib/api"; // your existing update function
+import { useAuth } from "@/lib/auth-context"; // to refresh user after update
+import { Button } from "./ui/button";
 
 interface ProfileHeaderProps {
-  user: {
-    id: string
-    name: string
-    email: string
-    imageUrl?: string
-  }
+	user: {
+		id: string;
+		name: string;
+		email: string;
+		imageUrl?: string;
+	};
 }
 
 export function ProfileHeader({ user }: ProfileHeaderProps) {
-  return (
-    <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-2xl border border-border-light">
-      <div className="relative w-16 h-16 rounded-full bg-gradient-primary overflow-hidden flex items-center justify-center">
-        {user.imageUrl ? (
-          <Image
-            src={user.imageUrl || "/placeholder.svg"}
-            alt={user.name}
-            width={64}
-            height={64}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <User className="w-8 h-8 text-white" />
-        )}
-      </div>
-      <div className="flex-1">
-        <h2 className="text-2xl font-bold text-text">{user.name}</h2>
-        <p className="text-text-muted">{user.email}</p>
-      </div>
-    </div>
-  )
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+	const [showModal, setShowModal] = useState(false);
+	const { token, refreshUser } = useAuth(); // IMPORTANT
+
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		// Create preview URL
+		const preview = URL.createObjectURL(file);
+		setPreviewUrl(preview);
+		setSelectedFile(file);
+		setShowModal(true);
+		setError("");
+	};
+
+	const handleConfirmUpload = async () => {
+		if (!selectedFile || !token) return;
+
+		setLoading(true);
+
+		try {
+			const updates = { image: selectedFile };
+			await updateProfile(token, updates);
+
+			// Refresh user profile to get updated image URL from the backend
+			await refreshUser();
+
+			setSelectedFile(null);
+			setPreviewUrl(null);
+			setShowModal(false);
+		} catch (err: any) {
+			setError(err.message || "Failed to upload image");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleCancel = () => {
+		setSelectedFile(null);
+		setPreviewUrl(null);
+		setShowModal(false);
+		setError("");
+	};
+
+	return (
+		<div className='flex flex-col gap-3 p-6 bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-2xl border border-border-light'>
+			<div className='flex items-center gap-4'>
+				{/* Profile Image Wrapper */}
+				<div
+					className='relative w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br gradient-primary flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity group'
+					onClick={() => !loading && fileInputRef.current?.click()}>
+					{loading ? (
+						<Loader2 className='w-8 h-8 animate-spin text-white' />
+					) : user.imageUrl ? (
+						<img
+							src={user.imageUrl || "/placeholder.svg"}
+							alt={user.name}
+							width={80}
+							height={80}
+							className='w-full h-full object-cover'
+						/>
+					) : (
+						<User className='w-10 h-10 text-white' />
+					)}
+
+					{/* Hidden File Input */}
+					<input
+						type='file'
+						ref={fileInputRef}
+						accept='image/*'
+						className='hidden'
+						onChange={handleImageChange}
+					/>
+				</div>
+
+				{/* User Info */}
+				<div className='flex-1'>
+					<h2 className='text-2xl font-bold text-text'>{user.name}</h2>
+					<p className='text-text-muted'>{user.email}</p>
+				</div>
+			</div>
+
+			{showModal && previewUrl && (
+				<div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4'>
+					<div className='bg-surface rounded-2xl p-6 max-w-sm w-full border border-border-light shadow-lg'>
+						<h3 className='text-xl font-bold text-text mb-4'>
+							Confirm Image Upload
+						</h3>
+
+						{/* Preview Image */}
+						<div className='mb-6 rounded-lg overflow-hidden border border-border-light'>
+							<img
+								src={previewUrl || "/placeholder.svg"}
+								alt='Preview'
+								className='w-full h-64 object-cover'
+							/>
+						</div>
+
+						{error && (
+							<div className='p-3 bg-error/10 text-error text-sm rounded-lg mb-4'>
+								{error}
+							</div>
+						)}
+
+						{/* Action Buttons */}
+						<div className='flex gap-3'>
+							<Button
+								onClick={handleCancel}
+								disabled={loading}
+								className='flex-1 bg-surface-secondary border border-border-light text-text hover:bg-surface-secondary/80'>
+								Cancel
+							</Button>
+							<Button
+								onClick={handleConfirmUpload}
+								disabled={loading}
+								className='flex-1 gradient-primary text-white flex items-center justify-center gap-2'>
+								{loading ? (
+									<>
+										<Loader2 className='w-4 h-4 animate-spin' />
+										Uploading...
+									</>
+								) : (
+									"Upload"
+								)}
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
+		</div>
+	);
 }

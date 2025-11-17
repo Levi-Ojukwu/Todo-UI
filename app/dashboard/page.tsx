@@ -17,7 +17,7 @@ import {
 	markTodoCompleted as markTodoCompletedApi,
 	deleteTodo as deleteTodoApi,
 } from "@/lib/api";
-import { Plus, Settings } from "lucide-react";
+import { ImagePlus, Plus, Settings } from "lucide-react";
 import { ConfirmModal } from "@/components/confirm-modal";
 
 interface Todo {
@@ -158,12 +158,27 @@ export default function DashboardPage() {
 				<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
 					{/* Header Section */}
 					<div className='flex items-center justify-between mb-8'>
-						<div>
-							<h1 className='text-4xl font-bold text-text mb-2'>Dashboard</h1>
-							<p className='text-text-muted'>
-								Welcome back, {user?.name}! Manage your tasks efficiently.
-							</p>
+						<div className='flex items-center gap-4'>
+							{user?.imageUrl ? (
+								<img
+									src={user.imageUrl || "/placeholder.svg"}
+									alt='Profile'
+									className='w-20 h-20 rounded-full object-cover border-2 border-primary'
+								/>
+							) : (
+								<div className='w-20 h-20 rounded-full bg-gray-300 text-3xl font-bold flex items-center justify-center text-white'>
+									{/* {user?.name?.charAt(0).toUpperCase() || "U"} */}
+                  <span><ImagePlus className="w-9 h-9"/></span>
+								</div>
+							)}
+							<div>
+								<h1 className='text-4xl font-bold text-text mb-2'>Dashboard</h1>
+								<p className='text-text-muted'>
+									Welcome back, {user?.name}! Manage your tasks efficiently.
+								</p>
+							</div>
 						</div>
+
 						<Button
 							onClick={() => router.push("/profile")}
 							className='flex items-center gap-2 gradient-primary text-white hover:shadow-accent'>
