@@ -60,19 +60,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const refreshUser = async () => {
     try {
       if (!token) {
-        console.log("[v0] No token available for refresh")
+        console.log("No token available for refresh")
         return
       }
 
-      console.log("[v0] Refreshing user profile...")
+      console.log("Refreshing user profile...")
 
       const { getProfile } = await import("@/lib/api")
       const updatedProfile = await getProfile(token)
       
       // Normalize the profile image URL
-      const apiBase = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api").replace(/\/api\/?$/, "")
+      const apiBase = (process.env.NEXT_PUBLIC_BASE_URL || "https://node-todo-api-go7w.onrender.com").replace(/\/api\/?$/, "")
 
-      console.log("[v0] Profile refresh response:", {
+      console.log("Profile refresh response:", {
         id: updatedProfile.id,
         profile_image: updatedProfile.profile_image,
         imageUrl: updatedProfile.imageUrl,
@@ -87,12 +87,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                  (updatedProfile.profile_image ? `${apiBase}${updatedProfile.profile_image}` : undefined),
       }
 
-      console.log("[v0] Setting user state with imageUrl:", normalizedUser.imageUrl)
+      console.log("Setting user state with imageUrl:", normalizedUser.imageUrl)
       
       setUser(normalizedUser)
       localStorage.setItem("auth_user", JSON.stringify(normalizedUser))
     } catch (err) {
-      console.error("[v0] Failed to refresh user profile:", err)
+      console.error("Failed to refresh user profile:", err)
       throw err
     }
   }

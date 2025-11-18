@@ -30,7 +30,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 		const file = e.target.files?.[0];
 		if (!file) return;
 
-		console.log("[v0] Image selected:", {
+		console.log("Image selected:", {
 			name: file.name,
 			size: file.size,
 			type: file.type,
@@ -46,7 +46,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 
 	const handleConfirmUpload = async () => {
 		if (!selectedFile || !token) {
-			console.log("[v0] Upload validation failed:", {
+			console.log("Upload validation failed:", {
 				hasFile: !!selectedFile,
 				hasToken: !!token,
 			});
@@ -71,7 +71,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 			setShowModal(false);
 			console.log("[v0] Upload flow completed");
 		} catch (err: any) {
-			console.error("[v0] Upload error:", err);
+			console.error("Upload error:", err);
 			setError(err.message || "Failed to upload image");
 		} finally {
 			setLoading(false);
@@ -102,10 +102,10 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <ImagePlus className="w-9 h-9 text-gray-100"/>
+            <User className="w-9 h-9 text-gray-100"/>
           )}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <Camera className="w-6 h-6 text-white" />
+            {/* <Camera className="w-6 h-6 text-white" /> */}
           </div>
 
           {/* Hidden File Input */}

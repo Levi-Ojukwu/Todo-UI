@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost",
+        hostname: "node-todo-api-go7w.onrender.com",
         port: "3000",
         pathname: "/uploads/**",
       },

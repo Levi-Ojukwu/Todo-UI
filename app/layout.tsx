@@ -8,7 +8,7 @@ import LoadingScreen from "@/components/loading-screen"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Task Manager - Professional Todo Dashboard",
+  title: "TaskFlow - Professional Todo Dashboard",
   description: "Manage your tasks efficiently with our modern todo dashboard",
 }
 

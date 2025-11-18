@@ -17,7 +17,7 @@ import {
 	markTodoCompleted as markTodoCompletedApi,
 	deleteTodo as deleteTodoApi,
 } from "@/lib/api";
-import { ImagePlus, Plus, Settings } from "lucide-react";
+import { ImagePlus, Plus, Settings, User } from "lucide-react";
 import { ConfirmModal } from "@/components/confirm-modal";
 
 interface Todo {
@@ -166,8 +166,9 @@ export default function DashboardPage() {
 									className='w-20 h-20 rounded-full object-cover border-2 border-primary'
 								/>
 							) : (
-								<div className='w-20 h-20 rounded-full bg-gray-300 text-3xl font-bold flex items-center justify-center text-white'>
-									{user?.name?.charAt(0).toUpperCase() || "U"}
+								<div className='w-16 h-16 rounded-full bg-gradient gradient-primary text-3xl font-bold flex items-center justify-center text-white'>
+									{/* {user?.name?.charAt(0).toUpperCase() || "U"} */}
+									<User className="w-8 h-8" />
 								</div>
 							)}
 							<div>

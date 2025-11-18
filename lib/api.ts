@@ -1,4 +1,6 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://node-todo-api-go7w.onrender.com/api"
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 
 export async function register(name: string, email: string, password: string) {
   const response = await fetch(`${API_URL}/auth/register`, {
@@ -34,7 +36,7 @@ export async function getProfile(token: string) {
 export async function updateProfile(token: string, updates: any) {
   const isFileUpload = updates.image instanceof File
 
-  console.log("[v0] updateProfile called with:", {
+  console.log("updateProfile called with:", {
     hasImage: !!updates.image,
     imageType: updates.image?.constructor.name,
     isFile: isFileUpload,
@@ -52,7 +54,7 @@ export async function updateProfile(token: string, updates: any) {
     if (updates.name) formData.append("name", updates.name)
     if (updates.password) formData.append("password", updates.password)
 
-    console.log("[v0] Sending FormData with file:", updates.image.name)
+    console.log("Sending FormData with file:", updates.image.name)
     body = formData
   } else {
     body = JSON.stringify(updates)
@@ -68,7 +70,7 @@ export async function updateProfile(token: string, updates: any) {
     
     const data = await response.json()
     
-    console.log("[v0] updateProfile response:", {
+    console.log("[updateProfile response:", {
       status: response.status,
       profileImage: data.user?.profile_image,
       imageUrl: data.user?.imageUrl,
@@ -78,11 +80,10 @@ export async function updateProfile(token: string, updates: any) {
     if (!response.ok) throw new Error(data.message)
     return data
   } catch (error) {
-    console.error("[v0] updateProfile error:", error)
+    console.error("updateProfile error:", error)
     throw error
   }
 }
-
 
 export async function addTodo(token: string, todo: any) {
   const response = await fetch(`${API_URL}/todo`, {
@@ -122,7 +123,6 @@ export async function listTodos(token: string) {
 
   return { todos: data };
 }
-
 
 export async function updateTodo(token: string, id: string, updates: any) {
   const response = await fetch(`${API_URL}/todo/${id}`, {
