@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://node-todo-api-go7w.onrender.com/api"
 
 export async function register(name: string, email: string, password: string) {
   const response = await fetch(`${API_URL}/auth/register`, {
